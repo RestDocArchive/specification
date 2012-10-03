@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Thorsten Hoeger thorsten.hoeger@taimos.de" />
+  <meta name="date" content="October 2012" />
+  <title>RestDoc - Documenting REST APIs</title>
+  <style type="text/css">
+/*<![CDATA[*/
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode, table.sourceCode pre 
+   { margin: 0; padding: 0; border: 0; vertical-align: baseline; border: none; }
+td.lineNumbers { border-right: 1px solid #AAAAAA; text-align: right; color: #AAAAAA; padding-right: 5px; padding-left: 5px; }
+td.sourceCode { padding-left: 5px; }
+code.sourceCode span.kw { color: #007020; font-weight: bold; } 
+code.sourceCode span.dt { color: #902000; }
+code.sourceCode span.dv { color: #40a070; }
+code.sourceCode span.bn { color: #40a070; }
+code.sourceCode span.fl { color: #40a070; }
+code.sourceCode span.ch { color: #4070a0; }
+code.sourceCode span.st { color: #4070a0; }
+code.sourceCode span.co { color: #60a0b0; font-style: italic; }
+code.sourceCode span.ot { color: #007020; }
+code.sourceCode span.al { color: red; font-weight: bold; }
+code.sourceCode span.fu { color: #06287e; }
+code.sourceCode span.re { }
+code.sourceCode span.er { color: red; font-weight: bold; }
+/*]]>*/
+  </style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">RestDoc - Documenting REST APIs</h1>
+<h3 class="author">Thorsten Hoeger thorsten.hoeger@taimos.de</h3>
+<h4 class="date">October 2012</h4>
+</div>
+<div id="TOC">
+<ul>
+<li><a href="#abstract">Abstract</a></li>
+<li><a href="#introduction">1. Introduction</a><ul>
+<li><a href="#rest">1.1 REST</a></li>
+<li><a href="#use-cases">1.2 Use Cases</a></li>
+<li><a href="#rest-api-example">1.3 REST API Example</a></li>
+</ul></li>
+<li><a href="#components">2. Components</a><ul>
+<li><a href="#resource">2.1 Resource</a></li>
+<li><a href="#parameter">2.2 Parameter</a></li>
+<li><a href="#validation">2.3 Validation</a></li>
+<li><a href="#method">2.4 Method</a></li>
+<li><a href="#header">2.5 Header</a></li>
+<li><a href="#response">2.6 Response</a></li>
+<li><a href="#schema">2.7 Schema</a></li>
+</ul></li>
+<li><a href="#restdoc">3. RestDoc</a><ul>
+<li><a href="#structure">3.1 Structure</a></li>
+</ul></li>
+<li><a href="#representations">4. Representations</a><ul>
+<li><a href="#json">4.1 JSON</a></li>
+<li><a href="#extensions">4.2 Extensions</a></li>
+</ul></li>
+<li><a href="#examples">5. Examples</a><ul>
+<li><a href="#extended-restdoc-example">5.2 Extended RestDoc example</a></li>
+</ul></li>
+<li><a href="#extensions-1">6. Extensions</a><ul>
+<li><a href="#extensibility">6.1 Extensibility</a></li>
+<li><a href="#section"></a></li>
+</ul></li>
+<li><a href="#a.-references">A. References</a><ul>
+<li><a href="#a.1-normative">A.1 Normative</a></li>
+<li><a href="#a.1-informative">A.1 Informative</a></li>
+</ul></li>
+</ul>
+</div>
+<h2 id="abstract"><a href="#TOC">Abstract</a></h2>
+<h2 id="introduction"><a href="#TOC">1. Introduction</a></h2>
+<h3 id="rest"><a href="#TOC">1.1 REST</a></h3>
+<h3 id="use-cases"><a href="#TOC">1.2 Use Cases</a></h3>
+<h3 id="rest-api-example"><a href="#TOC">1.3 REST API Example</a></h3>
+<p>For this specification a simple API for setting and retrieving localized messages is used.</p>
+<pre><code>---------------------- --------- ------------------------ --------------
+Resource               Methods   Representation           Status Codes
+---------------------- --------- ------------------------ --------------
+/{locale}/{messageId}  GET, PUT  message format (string)  200, 201, 404
+/fallback/{locale}     GET, PUT  language format (string) 200, 201
+---------------------- --------- ------------------------ --------------
+</code></pre>
+<p>To update or create a new localized message you PUT a string value to it's /{locale}/{messageId} URI. To assign a fallback locale for missing messages, you PUT a locale name to /fallback/{locale}.</p>
+<h2 id="components"><a href="#TOC">2. Components</a></h2>
+<h3 id="resource"><a href="#TOC">2.1 Resource</a></h3>
+<h3 id="parameter"><a href="#TOC">2.2 Parameter</a></h3>
+<h3 id="validation"><a href="#TOC">2.3 Validation</a></h3>
+<h3 id="method"><a href="#TOC">2.4 Method</a></h3>
+<h3 id="header"><a href="#TOC">2.5 Header</a></h3>
+<h3 id="response"><a href="#TOC">2.6 Response</a></h3>
+<h3 id="schema"><a href="#TOC">2.7 Schema</a></h3>
+<h2 id="restdoc"><a href="#TOC">3. RestDoc</a></h2>
+<h3 id="structure"><a href="#TOC">3.1 Structure</a></h3>
+<h2 id="representations"><a href="#TOC">4. Representations</a></h2>
+<h3 id="json"><a href="#TOC">4.1 JSON</a></h3>
+<p>see <a href="#extended-restdoc-example">Section 5.2</a></p>
+<h3 id="extensions"><a href="#TOC">4.2 Extensions</a></h3>
+<h2 id="examples"><a href="#TOC">5. Examples</a></h2>
+<h3 id="extended-restdoc-example"><a href="#TOC">5.2 Extended RestDoc example</a></h3>
+<pre class="sourceCode"><code class="sourceCode javascript">OPTIONS * HTTP/<span class="fl">1.1</span><br /><span class="dt">Accept</span>: application/json;<br /><br />{<br />  <span class="st">&quot;schemas&quot;</span> : {<br />    <span class="st">&quot;http://some.json/msg&quot;</span> : {<br />      <span class="st">&quot;type&quot;</span> : <span class="st">&quot;inline&quot;</span>,<br />      <span class="st">&quot;schema&quot;</span> : {<br />        <span class="st">&quot;type&quot;</span> : <span class="st">&quot;object&quot;</span>,<br />        <span class="st">&quot;properties&quot;</span> : {<br />          <span class="st">&quot;id&quot;</span> : {<br />            <span class="st">&quot;type&quot;</span> : <span class="st">&quot;string&quot;</span><br />          },<br />          <span class="st">&quot;content&quot;</span> : {<br />            <span class="st">&quot;type&quot;</span> : <span class="st">&quot;string&quot;</span><br />          }<br />        }<br />      }<br />    }<br />  },<br />  <span class="co">// Headers can be described at the server level and/or per-method</span><br />  <span class="st">&quot;headers&quot;</span>: {<br />    <span class="st">&quot;request&quot;</span>: {<br />      <span class="st">&quot;Authorization&quot;</span>: {<br />        <span class="st">&quot;description&quot;</span>: <span class="st">&quot;This server uses a custom authentication scheme. See http://myapi.com/docs/auth&quot;</span>,<br />        <span class="st">&quot;required&quot;</span>: <span class="kw">true</span><br />      }<br />    },<br />    <span class="st">&quot;response&quot;</span>: {<br />      <span class="st">&quot;X-RateLimit-Total&quot;</span>: {<br />        <span class="st">&quot;description&quot;</span>: <span class="st">&quot;The number of API calls allowed per-hour&quot;</span><br />      },<br />      <span class="st">&quot;X-RateLimit-Remaining&quot;</span>: {<br />        <span class="st">&quot;description&quot;</span>: <span class="st">&quot;Number of requests remaining until next refill&quot;</span><br />      },<br />      <span class="st">&quot;X-RateLimit-Reset&quot;</span>: {<br />        <span class="st">&quot;description&quot;</span>: <span class="st">&quot;The time at which X-RateLimit-Remaining will be reset back to X-RateLimit-Total&quot;</span><br />      }<br />    }<br />  },<br />  <span class="st">&quot;resources&quot;</span>: [<br />    {<br />      <span class="st">&quot;id&quot;</span>: <span class="st">&quot;LocalizedMessage&quot;</span>,<br />      <span class="st">&quot;description&quot;</span>: <span class="st">&quot;A localized message&quot;</span>,<br />      <span class="st">&quot;path&quot;</span>: <span class="st">&quot;/{locale}/{messageId}{?seasonal}&quot;</span>, <span class="co">// representing query params with L3 URI templates</span><br />      <span class="st">&quot;params&quot;</span>: { <span class="co">// URI parameters descriptions</span><br />        <span class="st">&quot;locale&quot;</span>: {<br />          <span class="st">&quot;description&quot;</span>: <span class="st">&quot;A standard locale string, e.g. </span><span class="ch">\&quot;</span><span class="st">en_US.utf-8</span><span class="ch">\&quot;</span><span class="st">&quot;</span>,<br />          <span class="st">&quot;validations&quot;</span>: [ { <span class="st">&quot;type&quot;</span>: <span class="st">&quot;match&quot;</span>, <span class="st">&quot;pattern&quot;</span>: <span class="st">&quot;[a-z]+(_[A-Z]+)?(</span><span class="ch">\\\\</span><span class="st">.[a-z-]+)?&quot;</span> } ]<br />        },<br />        <span class="st">&quot;messageId&quot;</span>: {<br />          <span class="st">&quot;description&quot;</span>: <span class="st">&quot;A free-form message string&quot;</span>,<br />          <span class="st">&quot;validations&quot;</span>: [ { <span class="st">&quot;type&quot;</span>: <span class="st">&quot;match&quot;</span>, <span class="st">&quot;pattern&quot;</span>: <span class="st">&quot;[a-z_]+&quot;</span> } ]<br />        },<br />        <span class="st">&quot;seasonal&quot;</span>: {<br />          <span class="st">&quot;description&quot;</span>: <span class="st">&quot;Whether the message is seasonal.&quot;</span>,<br />          <span class="st">&quot;validations&quot;</span>: [ { <span class="st">&quot;type&quot;</span>: <span class="st">&quot;match&quot;</span>, <span class="st">&quot;pattern&quot;</span>: <span class="st">&quot;^(true|false|yes|no)$&quot;</span> } ]<br />        }<br />      },<br />      <span class="st">&quot;methods&quot;</span>: {<br />        <span class="st">&quot;PUT&quot;</span>: {<br />          <span class="st">&quot;description&quot;</span>: <span class="st">&quot;Update or create a message&quot;</span>,<br />          <span class="st">&quot;statusCodes&quot;</span>: { <span class="st">&quot;201&quot;</span>: <span class="st">&quot;Created&quot;</span> },<br />          <span class="st">&quot;accepts&quot;</span>: [   <span class="co">// Representations accepted by the method on this resource.</span><br />            { <span class="st">&quot;type&quot;</span>: <span class="st">&quot;text/plain&quot;</span> },<br />            { <span class="st">&quot;type&quot;</span>: <span class="st">&quot;application/json&quot;</span>, <span class="st">&quot;schema&quot;</span>: <span class="st">&quot;http://some.json/msg&quot;</span> }<br />          ],<br />          <span class="st">&quot;headers&quot;</span>: { <span class="co">// Request headers only, response headers are defined under 'response'</span><br />            <span class="st">&quot;X-User-Token&quot;</span>: {<br />              <span class="st">&quot;description&quot;</span>: <span class="st">&quot;Used to identify the user creating the message&quot;</span><br />            }<br />          },<br />          <span class="st">&quot;response&quot;</span>: { <span class="co">// Response representations this resource/method provides</span><br />            <span class="st">&quot;types&quot;</span>: [<br />              { <span class="st">&quot;type&quot;</span>: <span class="st">&quot;text/plain&quot;</span> },<br />              { <span class="st">&quot;type&quot;</span>: <span class="st">&quot;application/json&quot;</span>, <span class="st">&quot;schema&quot;</span>: <span class="st">&quot;http://some.json/msg&quot;</span> },<br />            ],<br />            <span class="st">&quot;headers&quot;</span>: {<br />              <span class="st">&quot;X-What-Response-Header-Would-Only-Show-Up-For-One-Resource?&quot;</span>: {}<br />            }<br />          },<br />          <span class="st">&quot;examples&quot;</span>: [<br />            {<br />              <span class="st">&quot;path&quot;</span>: <span class="st">&quot;/en_US/greeting&quot;</span>,<br />              <span class="st">&quot;body&quot;</span>: <span class="st">&quot;Hello, world!&quot;</span><br />            },<br />            {<br />              <span class="st">&quot;path&quot;</span>: <span class="st">&quot;/en_US/greeting&quot;</span>,<br />              <span class="st">&quot;headers&quot;</span>: {<span class="st">&quot;content-type&quot;</span>: <span class="st">&quot;application/json&quot;</span>},<br />              <span class="st">&quot;body&quot;</span>: <span class="st">&quot;{</span><span class="ch">\&quot;</span><span class="st">id</span><span class="ch">\&quot;</span><span class="st">:</span><span class="ch">\&quot;</span><span class="st">greeting</span><span class="ch">\&quot;</span><span class="st">,</span><span class="ch">\&quot;</span><span class="st">content</span><span class="ch">\&quot;</span><span class="st">:</span><span class="ch">\&quot;</span><span class="st">Hello, world!</span><span class="ch">\&quot;</span><span class="st">}!&quot;</span><br />            }<br />          ]<br />        },<br />        <span class="st">&quot;GET&quot;</span>: {<br />          <span class="st">&quot;description&quot;</span>: <span class="st">&quot;Retrieve a message&quot;</span>,<br />          <span class="st">&quot;statusCodes&quot;</span>: { <br />             <span class="st">&quot;200&quot;</span>: <span class="st">&quot;Message retrieved successfully&quot;</span>, <br />             <span class="st">&quot;404&quot;</span>: <span class="st">&quot;Message not found&quot;</span><br />          },<br />          <span class="st">&quot;accepts&quot;</span>: [] <span class="co">// Explicitly indicate that this method takes no request body. </span><br />        }<br />      }<br />    },<br />    {<br />      <span class="co">// This resource has no human-readable documentation, but still provides some info on how to use it.</span><br />      <span class="st">&quot;id&quot;</span>: <span class="st">&quot;FallbackLocale&quot;</span>,<br />      <span class="st">&quot;path&quot;</span>: <span class="st">&quot;/fallback/{locale}&quot;</span>,<br />      <span class="st">&quot;methods&quot;</span>: {<br />        <span class="st">&quot;GET&quot;</span>: { <span class="st">&quot;statusCodes&quot;</span>: { <span class="st">&quot;200&quot;</span>: <span class="st">&quot;OK&quot;</span> } },<br />        <span class="st">&quot;PUT&quot;</span>: { <span class="st">&quot;statusCodes&quot;</span>: { <span class="st">&quot;201&quot;</span>: <span class="st">&quot;Created&quot;</span> } }<br />      },<br />      <span class="st">&quot;params&quot;</span>: {<br />        <span class="st">&quot;locale&quot;</span>: { <br />          <span class="st">&quot;validations&quot;</span>: [ { <span class="st">&quot;type&quot;</span>: <span class="st">&quot;match&quot;</span>, <span class="st">&quot;pattern&quot;</span>: <span class="st">&quot;[a-z]+(_[A-Z]+)?(</span><span class="ch">\\\\</span><span class="st">.[a-z-]+)?&quot;</span> } ]<br />        }<br />      }<br />    }<br />  ]<br />}</code></pre>
+<h2 id="extensions-1"><a href="#TOC">6. Extensions</a></h2>
+<h3 id="extensibility"><a href="#TOC">6.1 Extensibility</a></h3>
+<h3 id="section"><a href="#TOC"></a></h3>
+<h2 id="a.-references"><a href="#TOC">A. References</a></h2>
+<h3 id="a.1-normative"><a href="#TOC">A.1 Normative</a></h3>
+<p>[RFC2119]: RFC 2119 - Key words for use in RFCs to Indicate Requirement Levels</p>
+<p>[RFC4627]: RFC 4627 - The application/json Media Type for JavaScript Object Notation (JSON)</p>
+<p>[RFC6570]: RFC 6570 - URI Template</p>
+<p>[RFC2616]: RFC 2616 - Hypertext Transfer Protocol -- HTTP/1.1</p>
+<p>[XML]: Extensible Markup Language (XML) 1.0 (Fifth Edition)</p>
+<h3 id="a.1-informative"><a href="#TOC">A.1 Informative</a></h3>
+<p>[REST]: R. Fielding - Architectural Styles and the Design of Network-based Software Architectures, Chapter 5</p>
+</body>
+</html>
