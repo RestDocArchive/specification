@@ -6,11 +6,18 @@
 
 ## 1. Introduction
 
-### 1.1 REST
+### 1.1 About REST
 
-### 1.2 Use Cases
+REpresentational State Transfer (REST) is a style of software architecture for distributed systems such as the World Wide Web. The term representational state transfer was introduced and defined in 2000 by Roy Fielding in his doctoral dissertation.\[[REST]\] 
 
-### 1.3 REST API Example
+The REST architectural style was developed in parallel with HTTP/1.1, based on the existing design of HTTP/1.0. The largest implementation of a system conforming to the REST architectural style is the World Wide Web. REST exemplifies how the Web's architecture emerged by characterizing and constraining the macro-interactions of the four components of the Web, namely origin servers, gateways, proxies and clients, without imposing limitations on the individual participants. As such, REST essentially governs the proper behavior of participants.
+REST-style architectures consist of clients and servers. Clients initiate requests to servers; servers process requests and return appropriate responses. Requests and responses are built around the transfer of representations of resources. A resource can be essentially any coherent and meaningful concept that may be addressed. A representation of a resource is typically a document that captures the current or intended state of a resource.
+The client begins sending requests when it is ready to make the transition to a new state. While one or more requests are outstanding, the client is considered in transition. The representation of each application state contains links that may be used the next time the client chooses to initiate a new state transition.
+REST facilitates the transaction between web servers by allowing loose coupling between different services. REST is less strongly typed than its counterpart, SOAP. The REST language is based on the use of nouns and verbs, and has an emphasis on readability.
+
+Source: Wikipedia\[[WikiREST]\]
+
+### 1.2 REST API Example
 
 For this specification a simple API for setting and retrieving localized messages is used.
 
@@ -26,6 +33,8 @@ Resource               Methods   Representation           Status Codes
 To update or create a new localized message you PUT a string value to it's /{locale}/{messageId} URI. To assign a fallback locale for missing messages, you PUT a locale name to /fallback/{locale}.
 
 ## 2. Components
+
+The RestDoc model consist of different components, which are described in the following sections. EAch component is part of the root model or is part of another component. The overall structure of RestDoc in defined in chapter [3.1](#structure)
 
 ### 2.1 Resource
 
@@ -209,3 +218,6 @@ Accept: application/json;
 
 [REST]: http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm "R. Fielding - Architectural Styles and the Design of Network-based Software Architectures, Chapter 5"
 \[REST\]: R. Fielding - Architectural Styles and the Design of Network-based Software Architectures, Chapter 5
+
+[WikiREST]: http://en.wikipedia.org/wiki/Representational_state_transfer "Wikipedia - Representational state transfer"
+\[WikiREST\]: "Wikipedia - Representational state transfer"
