@@ -39,7 +39,8 @@ code.sourceCode span.er { color: red; font-weight: bold; }
 <li><a href="#abstract">Abstract</a></li>
 <li><a href="#introduction">1. Introduction</a><ul>
 <li><a href="#about-rest">1.1 About REST</a></li>
-<li><a href="#rest-api-example">1.2 REST API Example</a></li>
+<li><a href="#terminology">1.2. Terminology</a></li>
+<li><a href="#rest-api-example">1.3 REST API Example</a></li>
 </ul></li>
 <li><a href="#components">2. Components</a><ul>
 <li><a href="#resource">2.1 Resource</a></li>
@@ -47,11 +48,13 @@ code.sourceCode span.er { color: red; font-weight: bold; }
 <li><a href="#validation">2.3 Validation</a></li>
 <li><a href="#method">2.4 Method</a></li>
 <li><a href="#header">2.5 Header</a></li>
-<li><a href="#response">2.6 Response</a></li>
-<li><a href="#schema">2.7 Schema</a></li>
+<li><a href="#mediatypes">2.6 MediaTypes</a></li>
+<li><a href="#response">2.7 Response</a></li>
+<li><a href="#schema">2.8 Schema</a></li>
 </ul></li>
 <li><a href="#restdoc">3. RestDoc</a><ul>
 <li><a href="#structure">3.1 Structure</a></li>
+<li><a href="#retrieval">3.2 Retrieval</a></li>
 </ul></li>
 <li><a href="#representations">4. Representations</a><ul>
 <li><a href="#json">4.1 JSON</a></li>
@@ -76,7 +79,9 @@ code.sourceCode span.er { color: red; font-weight: bold; }
 <p>REpresentational State Transfer (REST) is a style of software architecture for distributed systems such as the World Wide Web. The term representational state transfer was introduced and defined in 2000 by Roy Fielding in his doctoral dissertation.[<a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm" title="R. Fielding - Architectural Styles and the Design of Network-based Software Architectures, Chapter 5">REST</a>]</p>
 <p>The REST architectural style was developed in parallel with HTTP/1.1, based on the existing design of HTTP/1.0. The largest implementation of a system conforming to the REST architectural style is the World Wide Web. REST exemplifies how the Web's architecture emerged by characterizing and constraining the macro-interactions of the four components of the Web, namely origin servers, gateways, proxies and clients, without imposing limitations on the individual participants. As such, REST essentially governs the proper behavior of participants. REST-style architectures consist of clients and servers. Clients initiate requests to servers; servers process requests and return appropriate responses. Requests and responses are built around the transfer of representations of resources. A resource can be essentially any coherent and meaningful concept that may be addressed. A representation of a resource is typically a document that captures the current or intended state of a resource. The client begins sending requests when it is ready to make the transition to a new state. While one or more requests are outstanding, the client is considered in transition. The representation of each application state contains links that may be used the next time the client chooses to initiate a new state transition. REST facilitates the transaction between web servers by allowing loose coupling between different services. REST is less strongly typed than its counterpart, SOAP. The REST language is based on the use of nouns and verbs, and has an emphasis on readability.</p>
 <p>Source: Wikipedia[<a href="http://en.wikipedia.org/wiki/Representational_state_transfer" title="Wikipedia - Representational state transfer">WikiREST</a>]</p>
-<h3 id="rest-api-example"><a href="#TOC">1.2 REST API Example</a></h3>
+<h3 id="terminology"><a href="#TOC">1.2. Terminology</a></h3>
+<p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be interpreted as described in RFC 2119. [<a href="http://www.ietf.org/rfc/rfc2119.txt" title="RFC 2119 - Key words for use in RFCs to Indicate Requirement Levels">RFC2119</a>]</p>
+<h3 id="rest-api-example"><a href="#TOC">1.3 REST API Example</a></h3>
 <p>For this specification a simple API for setting and retrieving localized messages is used.</p>
 <pre><code>---------------------- --------- ------------------------ --------------
 Resource               Methods   Representation           Status Codes
@@ -89,16 +94,32 @@ Resource               Methods   Representation           Status Codes
 <h2 id="components"><a href="#TOC">2. Components</a></h2>
 <p>The RestDoc model consist of different components, which are described in the following sections. EAch component is part of the root model or is part of another component. The overall structure of RestDoc in defined in chapter <a href="#structure">3.1</a></p>
 <h3 id="resource"><a href="#TOC">2.1 Resource</a></h3>
+<p>A <em>resource</em> MUST have a unique <em>id</em> that names the resource and SHOULD have a <em>description</em> containing further information about the intented use of the given resource. The <em>path</em> MUST be part of the resource definition and MUST be unique. The path is a URI [<a href="http://www.ietf.org/rfc/rfc2396.txt" title="RFC 2396 - Uniform Resource Identifiers (URI): Generic Syntax">RFC2396</a>] or URI template [<a href="http://www.ietf.org/rfc/rfc6570.txt" title="RFC 6570 - URI Template">RFC6570</a>]. If the path contains variables the resource MUST contain a set of <em>parameter</em> definitions. The resource MUST contain one definition for each available HTTP <em>method</em>.</p>
+<p>In the running example there are 2 resources with the paths &quot;/{locale}/{messageId}&quot; and &quot;/fallback/{locale}&quot;.</p>
 <h3 id="parameter"><a href="#TOC">2.2 Parameter</a></h3>
+<p>A <em>parameter</em> definition is used to define variable expansion for URI templates used in resources paths. A parameter SHOULD contain a <em>description</em> describing the given parameter. A parameter MAY define <em>validations</em> for the content. Each parameter name within one resource MUST be unique.</p>
+<p>In the running example there are 2 parameters defined: locale and messageId.</p>
 <h3 id="validation"><a href="#TOC">2.3 Validation</a></h3>
+<p><em>Validations</em> define means to check the content of parameters. Validations are a set of type/pattern pairs with <em>type</em> defining the validation type and <em>pattern</em> containing the regular expression to apply. Currently the only supported type is <em>match</em>. Multiple entries within one validation set are disjunctive, so the entries are ORed.</p>
 <h3 id="method"><a href="#TOC">2.4 Method</a></h3>
+<p>A <em>method</em> entry represents the pair of <em>HTTP Verb</em> and <em>resource</em>. It SHOULD contain a <em>description</em> that describes the effect of calling this method. It also SHOULD conatins a set of <em>status code</em> definitions. A Status Code is represented by an integer with the HTTP Status Code and a textual definition what this return code means. The method SHOULD contain a set of accepted MediaTypes and SHOULD contain a set of request <em>headers</em>. Further teh methdo SHOULD contain a <em>response</em> definition. In addition a method MAY provide a set of <em>examples</em>, each consisting of an expanded path (no templates), a body and optional headers.</p>
+<p>In the running each resource has the two methods GET and PUT. The resource &quot;/{locale}/{messageId}&quot; has status codes of 200(OK), 201(Created) and 404(Not Found).</p>
 <h3 id="header"><a href="#TOC">2.5 Header</a></h3>
-<h3 id="response"><a href="#TOC">2.6 Response</a></h3>
-<h3 id="schema"><a href="#TOC">2.7 Schema</a></h3>
+<p>A <em>header</em> is defined by its name as it is used in the HTTP message and SHOULD contain a <em>description</em>. A header can be required or optional with optional being the default. According to the position of the header definition they are API global or method local.</p>
+<h3 id="mediatypes"><a href="#TOC">2.6 MediaTypes</a></h3>
+<p>Request and response MediaTypes can be defined via a type/schema pair. <em>type</em> is the MediaType as defined in [<a href="http://www.ietf.org/rfc/rfc4288.txt" title="RFC 4288 - Media Type Specifications and Registration Procedures">RFC4288</a>] and schema defines the URI of the content schema. (e.g. XSD, JSON-Schema, etc) The schema field is optional.</p>
+<h3 id="response"><a href="#TOC">2.7 Response</a></h3>
+<p>The response definition consists of a set of MediaTypes for return values and a set of response headers. Both sets are optional.</p>
+<h3 id="schema"><a href="#TOC">2.8 Schema</a></h3>
+<p>A schema is identified by its URI. There are two types of schema definitions. If the MediaType is JSON the schema can be defined inline otherwise the schema definition points to the URL containing the schema document.</p>
 <h2 id="restdoc"><a href="#TOC">3. RestDoc</a></h2>
 <h3 id="structure"><a href="#TOC">3.1 Structure</a></h3>
+<p>The overall structure of a RestDoc documentation consists of an optional schema set, an optional global headers set and a required resource set.</p>
+<h3 id="retrieval"><a href="#TOC">3.2 Retrieval</a></h3>
+<p>The retrieval of the RestDoc documentation is done via the HTTP OPTIONS verb. Querying the server with an asterisk as path (<code>OPTIONS * HTTP/1.1</code>) MUST return a RestDoc documentation with all resources available. Querying with a URI fragment (<code>OPTIONS /my/query/path HTTP/1.1</code>) MUST return a RestDoc documentation with all resources with paths starting with the given URI fragment.</p>
 <h2 id="representations"><a href="#TOC">4. Representations</a></h2>
 <h3 id="json"><a href="#TOC">4.1 JSON</a></h3>
+<p>The default representation of RestDoc is JSON with the custom MediaType <code>application/x-restdoc+json</code></p>
 <p>see <a href="#extended-restdoc-example">Section 5.2</a></p>
 <h3 id="extensions"><a href="#TOC">4.2 Extensions</a></h3>
 <h2 id="examples"><a href="#TOC">5. Examples</a></h2>
@@ -112,6 +133,8 @@ Resource               Methods   Representation           Status Codes
 <p>[RFC2119]: RFC 2119 - Key words for use in RFCs to Indicate Requirement Levels</p>
 <p>[RFC4627]: RFC 4627 - The application/json Media Type for JavaScript Object Notation (JSON)</p>
 <p>[RFC6570]: RFC 6570 - URI Template</p>
+<p>[RFC4288]: RFC 4288 - Media Type Specifications and Registration Procedures</p>
+<p>[RFC2396]: RFC 2396 - Uniform Resource Identifiers (URI): Generic Syntax</p>
 <p>[RFC2616]: RFC 2616 - Hypertext Transfer Protocol -- HTTP/1.1</p>
 <p>[XML]: Extensible Markup Language (XML) 1.0 (Fifth Edition)</p>
 <h3 id="a.1-informative"><a href="#TOC">A.1 Informative</a></h3>

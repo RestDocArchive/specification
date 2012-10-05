@@ -17,7 +17,10 @@ REST facilitates the transaction between web servers by allowing loose coupling 
 
 Source: Wikipedia\[[WikiREST]\]
 
-### 1.2 REST API Example
+### 1.2. Terminology
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119. \[[RFC2119]\]
+
+### 1.3 REST API Example
 
 For this specification a simple API for setting and retrieving localized messages is used.
 
@@ -38,33 +41,97 @@ The RestDoc model consist of different components, which are described in the fo
 
 ### 2.1 Resource
 
+A _resource_ MUST have a unique _id_ that names the resource and SHOULD have a _description_ containing further information about the intented use of the given resource. The _path_ MUST be part of the resource definition and MUST be unique. The path is a URI \[[RFC2396]\] or URI template \[[RFC6570]\]. If the path contains variables the resource MUST contain a set of _parameter_ definitions. The resource MUST contain one definition for each available HTTP _method_.
+
+In the running example there are 2 resources with the paths "/{locale}/{messageId}" and "/fallback/{locale}".
+
 ### 2.2 Parameter
+
+A _parameter_ definition is used to define variable expansion for URI templates used in resources paths. A parameter SHOULD contain a _description_ describing the given parameter. A parameter MAY define _validations_ for the content. Each parameter name within one resource MUST be unique.
+
+In the running example there are 2 parameters defined: locale and messageId.
 
 ### 2.3 Validation
 
+_Validations_ define means to check the content of parameters. Validations are a set of type/pattern pairs with _type_ defining the validation type and _pattern_ containing the regular expression to apply.
+Currently the only supported type is _match_. Multiple entries within one validation set are disjunctive, so the entries are ORed.
+
 ### 2.4 Method
+
+A _method_ entry represents the pair of _HTTP Verb_ and _resource_. It SHOULD contain a _description_ that describes the effect of calling this method. It also SHOULD conatins a set of _status code_ definitions. A Status Code is represented by an integer with the HTTP Status Code and a textual definition what this return code means. The method SHOULD contain a set of accepted MediaTypes and SHOULD contain a set of request _headers_. Further teh methdo SHOULD contain a _response_ definition. In addition a method MAY provide a set of _examples_, each consisting of an expanded path (no templates), a body and optional headers.
+
+In the running each resource has the two methods GET and PUT. The resource "/{locale}/{messageId}" has status codes of 200(OK), 201(Created) and 404(Not Found).
 
 ### 2.5 Header
 
-### 2.6 Response
+A _header_ is defined by its name as it is used in the HTTP message and SHOULD contain a _description_. A header can be required or optional with optional being the default. According to the position of the header definition they are API global or method local.
 
-### 2.7 Schema
+### 2.6 MediaTypes
+
+Request and response MediaTypes can be defined via a type/schema pair. _type_ is the MediaType as defined in \[[RFC4288]\] and schema defines the URI of the content schema. (e.g. XSD, JSON-Schema, etc) The schema field is optional.
+
+### 2.7 Response
+
+The response definition consists of a set of MediaTypes for return values and a set of response headers. Both sets are optional.
+
+### 2.8 Schema
+
+A schema is identified by its URI. There are two types of schema definitions. If the MediaType is JSON the schema can be defined inline otherwise the schema definition points to the URL containing the schema document.
 
 ## 3. RestDoc
 
 ### 3.1 Structure
 
+The overall structure of a RestDoc documentation consists of an optional schema set, an optional global headers set and a required resource set.
+
+### 3.2 Retrieval
+
+The retrieval of the RestDoc documentation is done via the HTTP OPTIONS verb. Querying the server with an asterisk as path (``OPTIONS * HTTP/1.1``) MUST return a RestDoc documentation with all resources available.
+Querying with a URI fragment (``OPTIONS /my/query/path HTTP/1.1``) MUST return a RestDoc documentation with all resources with paths starting with the given URI fragment.
+
 ## 4. Representations
 
 ### 4.1 JSON
 
-see [Section 5.2](#extended-restdoc-example)
+The default representation of RestDoc is JSON with the custom MediaType ``application/x-restdoc+json``. Because of the usage of custom names and values as field names it is not possible to define RestDoc with JSON Schema. In the following you find a textual definition of the RestDoc JSON representation.
+
+The root object contains of two object with the names "schema" and "headers" and an array "resources". 
+
+The "schema" object contaisn object with the schema URI as name and the schema definition as content. The content contains a field type with value "inline" or "url". Inline schemas provide a schema object with inline JSON-Schema and URL schemas provide a field url with the URL of the schema document.
+
+~~~~~ {.javascript}
+  "schemas" : {
+    "http://some.json/msg" : {
+      "type" : "inline",
+      "schema" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "content" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+	"http://some.xml/msg" : {
+	  "type" : "url",
+	  "url" : "http://some.xml/msg.xsd"
+	}
+  },
+~~~~~
+
+
+
+
+see [Section 5.2](#full-restdoc-example)
 
 ### 4.2 Extensions
 
 ## 5. Examples
 
-### 5.2 Extended RestDoc example
+### 5.2 Full RestDoc example
 
 ~~~~~ {.javascript}
 OPTIONS * HTTP/1.1
@@ -207,6 +274,12 @@ Accept: application/json;
 
 [RFC6570]: http://www.ietf.org/rfc/rfc6570.txt "RFC 6570 - URI Template"
 \[RFC6570\]: RFC 6570 - URI Template
+
+[RFC4288]: http://www.ietf.org/rfc/rfc4288.txt "RFC 4288 - Media Type Specifications and Registration Procedures"
+\[RFC4288\]: RFC 4288 - Media Type Specifications and Registration Procedures
+
+[RFC2396]: http://www.ietf.org/rfc/rfc2396.txt "RFC 2396 - Uniform Resource Identifiers (URI): Generic Syntax"
+\[RFC2396\]: RFC 2396 - Uniform Resource Identifiers (URI): Generic Syntax
 
 [RFC2616]: http://www.ietf.org/rfc/rfc2616.txt "RFC 2616 - Hypertext Transfer Protocol -- HTTP/1.1"
 \[RFC2616\]: RFC 2616 - Hypertext Transfer Protocol -- HTTP/1.1
