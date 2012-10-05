@@ -1,5 +1,6 @@
 % RestDoc - Documenting REST APIs
-% Thorsten Hoeger thorsten.hoeger@taimos.de
+% Thorsten Hoeger - Taimos GmbH - thorsten.hoeger@taimos.de
+ name - company - mail
 % October 2012
 
 ## Abstract
@@ -58,7 +59,7 @@ Currently the only supported type is _match_. Multiple entries within one valida
 
 ### 2.4 Method
 
-A _method_ entry represents the pair of _HTTP Verb_ and _resource_. It SHOULD contain a _description_ that describes the effect of calling this method. It also SHOULD conatins a set of _status code_ definitions. A Status Code is represented by an integer with the HTTP Status Code and a textual definition what this return code means. The method SHOULD contain a set of accepted MediaTypes and SHOULD contain a set of request _headers_. Further teh methdo SHOULD contain a _response_ definition. In addition a method MAY provide a set of _examples_, each consisting of an expanded path (no templates), a body and optional headers.
+A _method_ entry represents the pair of _HTTP Verb_ and _resource_. It SHOULD contain a _description_ that describes the effect of calling this method. It also SHOULD contain a set of _status code_ definitions. A Status Code is represented by an integer with the HTTP Status Code and a textual definition what this return code means. The method SHOULD contain a set of accepted MediaTypes and SHOULD contain a set of request _headers_. Further the method SHOULD contain a _response_ definition. In addition a method MAY provide a set of _examples_, each consisting of an expanded path (no templates), a body and optional headers.
 
 In the running each resource has the two methods GET and PUT. The resource "/{locale}/{messageId}" has status codes of 200(OK), 201(Created) and 404(Not Found).
 
@@ -97,7 +98,7 @@ The default representation of RestDoc is JSON with the custom MediaType ``applic
 
 The root object contains of two object with the names "schema" and "headers" and an array "resources". 
 
-The "schema" object contaisn object with the schema URI as name and the schema definition as content. The content contains a field type with value "inline" or "url". Inline schemas provide a schema object with inline JSON-Schema and URL schemas provide a field url with the URL of the schema document.
+The "schema" object contains objects with the schema URI as name and the schema definition as content. The content contains a field type with value "inline" or "url". Inline schemas provide a schema object with inline JSON-Schema and URL schemas provide a field url with the URL of the schema document.
 
 ~~~~~ {.javascript}
   "schemas" : {
@@ -122,16 +123,67 @@ The "schema" object contaisn object with the schema URI as name and the schema d
   },
 ~~~~~
 
+The "headers" object contains a "request" and a "response" object. The contents of these objects are itself objects with the header name as field name and the content as described in [Section 2.5](#header).
 
+~~~~~ {.javascript}
+  "headers": {
+    "request": {
+      "Authorization": {
+        "description": "This server uses a custom authentication scheme. See http://myapi.com/docs/auth",
+        "required": true
+      }
+    },
+    "response": {
+      "X-RateLimit-Total": {
+        "description": "The number of API calls allowed per-hour"
+      }
+    }
+  },
+~~~~~
 
+The resources array contains of objects with the following fields:
 
-see [Section 5.2](#full-restdoc-example)
+- id: the id of the resource
+- description: the resource description
+- path: the resource URI or URI template
+- params: the parameter object
+- methods: the method object
 
-### 4.2 Extensions
+The _params_ object has the parameter names as field names and an object as content.
+
+- description: the parameter description
+- validations: array of parameter validations
+	- type: the validation type (match)
+	- pattern: the regular expression
+
+~~~~~ {.javascript}
+  "params": { // URI parameters descriptions
+    "locale": {
+      "description": "A standard locale string, e.g. \"en_US.utf-8\"",
+      "validations": [ { "type": "match", "pattern": "[a-z]+(_[A-Z]+)?(\\\\.[a-z-]+)?" } ]
+    }
+  },
+~~~~~
+
+The _methods_ object has HTTP verbs as field names and an object as content.
+
+- description: the method description
+- statusCodes: the status code object
+- accepts: the accept MediaTypes
+- headers: the headers object
+- response: the response object with types and headers
+	- types: the response MediaTypes
+	- headers: the response headers object
+- examples: array of example objects
+	- path: the expanded path URI
+	- headers: request headers
+	- body: the example request body
+
+see [Section 5.2](#full-restdoc-example) for a full example of a JSON representation of RestDoc
 
 ## 5. Examples
 
-### 5.2 Full RestDoc example
+### 5.1 Full RestDoc example
 
 ~~~~~ {.javascript}
 OPTIONS * HTTP/1.1
@@ -241,26 +293,55 @@ Accept: application/json;
       // This resource has no human-readable documentation, but still provides some info on how to use it.
       "id": "FallbackLocale",
 	  "path": "/fallback/{locale}",
-      "methods": {
-        "GET": { "statusCodes": { "200": "OK" } },
-        "PUT": { "statusCodes": { "201": "Created" } }
-      },
       "params": {
         "locale": { 
           "validations": [ { "type": "match", "pattern": "[a-z]+(_[A-Z]+)?(\\\\.[a-z-]+)?" } ]
         }
+      },
+      "methods": {
+        "GET": { "statusCodes": { "200": "OK" } },
+        "PUT": { "statusCodes": { "201": "Created" } }
       }
     }
   ]
 }
 ~~~~~
 
-
 ## 6. Extensions
 
 ### 6.1 Extensibility
 
-### 
+RestDoc is designed to be extensible. Therefore any additional fields not named in this specification MUST be ignored by implementations that do not understand them. But implementations MUST NOT rely on any additional fields to be RestDoc compliant. Extensions MUST NOT change the meaning of fields defined in this specification.
+
+An extension may for example defined other validation types than "match" but must not change the behavior of the type "match".
+
+### 6.2 Naming conventions
+
+Extensions to RestDoc are given a unique name beginning with _RestDoc-_. The example extension above could be named _RestDoc-Validations_.
+
+## 7. Copyright
+
+This specification is copyrighted by the authors named in section 7.1. Is is free to use for any purposes commercial or non-commercial.
+
+### 7.1 Authors
+
+The following authors are responsible for the RestDoc core-specification:
+
+~~~~
+Thorsten Hoeger
+Taimos GmbH
+Hohenzollernstrasse 32
+D-73262 Reichenbach
+thorsten.hoeger@taimos.de
+~~~~
+
+~~~~
+please fill in other authors
+~~~~
+
+### 7.2 Contact
+
+This specification and any related work is located at <http://www.restdoc.org> and <https://github.com/RestDoc>. 
 
 ## A. References
 
@@ -284,8 +365,8 @@ Accept: application/json;
 [RFC2616]: http://www.ietf.org/rfc/rfc2616.txt "RFC 2616 - Hypertext Transfer Protocol -- HTTP/1.1"
 \[RFC2616\]: RFC 2616 - Hypertext Transfer Protocol -- HTTP/1.1
 
-[XML]: http://www.w3.org/TR/REC-xml "Extensible Markup Language (XML) 1.0 (Fifth Edition)"
-\[XML\]: Extensible Markup Language (XML) 1.0 (Fifth Edition)
+[XML]: http://www.w3.org/TR/REC-xml "W3C - Extensible Markup Language (XML) 1.0 (Fifth Edition)"
+\[XML\]: W3C - Extensible Markup Language (XML) 1.0 (Fifth Edition)
 
 ### A.1 Informative
 
