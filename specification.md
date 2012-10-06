@@ -182,7 +182,7 @@ The _methods_ object has HTTP verbs as field names and an object as content.
 	- headers: request headers
 	- body: the example request body
 
-see [Section 5.2](#full-restdoc-example) for a full example of a JSON representation of RestDoc
+see [Section 5.1](#full-restdoc-example) for a full example of a JSON representation of RestDoc
 
 ## 5. Examples
 
