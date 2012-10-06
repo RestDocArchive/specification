@@ -38,7 +38,7 @@ To update or create a new localized message you PUT a string value to it's /{loc
 
 ## 2. Components
 
-The RestDoc model consist of different components, which are described in the following sections. EAch component is part of the root model or is part of another component. The overall structure of RestDoc in defined in chapter [3.1](#structure)
+The RestDoc model consist of different components, which are described in the following sections. Each component is part of the root model or is part of another component. The overall structure of RestDoc in defined in chapter [3.1](#structure)
 
 ### 2.1 Resource
 
@@ -337,7 +337,13 @@ Hohenzollernstrasse 32
 D-73262 Reichenbach
 thorsten.hoeger@taimos.de
 ~~~~
-
+```
+Saar Yahalom
+Microsoft
+Shenkar 13, Hertzeliya
+Israel
+saary .at. microsoft.com
+```
 ~~~~
 please fill in other authors
 ~~~~
