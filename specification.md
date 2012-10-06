@@ -129,7 +129,7 @@ The "headers" object contains a "request" and a "response" object. The contents 
   "headers": {
     "request": {
       "Authorization": {
-        "description": "This server uses a custom authentication scheme. See http://myapi.com/docs/auth",
+        "description": "See http://myapi.com/docs/auth",
         "required": true
       }
     },
@@ -160,7 +160,10 @@ The _params_ object has the parameter names as field names and an object as cont
   "params": { // URI parameters descriptions
     "locale": {
       "description": "A standard locale string, e.g. \"en_US.utf-8\"",
-      "validations": [ { "type": "match", "pattern": "[a-z]+(_[A-Z]+)?(\\\\.[a-z-]+)?" } ]
+      "validations": [ { 
+	    "type": "match", 
+		"pattern": "[a-z]+(_[A-Z]+)?(\\\\.[a-z-]+)?" 
+      } ]
     }
   },
 ~~~~~
