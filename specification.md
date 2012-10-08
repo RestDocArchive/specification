@@ -95,7 +95,7 @@ Performing an OPTIONS request with an unexpanded URI path MUST return a RestDoc 
 
 ### 4.1 JSON
 
-The default representation of RestDoc is JSON with the custom MediaType ``application/x-restdoc+json``. Because of the usage of custom names and values as field names it is not possible to define RestDoc with JSON Schema. In the following you find a textual definition of the RestDoc JSON representation.
+The default representation of RestDoc is JSON with the custom MediaType ``application/x-restdoc+json``. In the following you find a textual definition of the RestDoc JSON representation.
 
 The root object contains of two object with the names "schema" and "headers" and an array "resources". 
 
