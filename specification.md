@@ -345,6 +345,15 @@ Shenkar 13, Hertzeliya
 Israel
 saary .at. microsoft.com
 ```
+
+```
+Stephen Sugden
+Bet Smart Media
+19 Bastion Square, Victoria
+British Columbia, Canada
+stephen@betsmartmedia.com
+```
+
 ~~~~
 please fill in other authors
 ~~~~
