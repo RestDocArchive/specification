@@ -88,7 +88,8 @@ The overall structure of a RestDoc documentation consists of an optional schema 
 ### 3.2 Retrieval
 
 The retrieval of the RestDoc documentation is done via the HTTP OPTIONS verb. Querying the server with an asterisk as path (``OPTIONS * HTTP/1.1``) MUST return a RestDoc documentation with all resources available.
-Querying with a URI fragment (``OPTIONS /my/query/path HTTP/1.1``) MUST return a RestDoc documentation with all resources with paths starting with the given URI fragment.
+
+Performing an OPTIONS request with an unexpanded URI path MUST return a RestDoc resource description. Given our example application the request ``OPTIONS /%7Blocale%7D/%7BmessageId%7D HTTP/1.1`` MUST return the RestDoc resource description for the "LocalizedMessage" resource.
 
 ## 4. Representations
 
