@@ -1,5 +1,7 @@
 % RestDoc - Documenting REST APIs
-% Thorsten Hoeger - Taimos GmbH - thorsten.hoeger@taimos.de
+% Thorsten Hoeger - Taimos GmbH
+ Saar Yahalom - Microsoft
+ Stephen Sugden - Bet Smart Media
  name - company - mail
 % October 2012
 
@@ -338,22 +340,20 @@ Hohenzollernstrasse 32
 D-73262 Reichenbach
 thorsten.hoeger@taimos.de
 ~~~~
-```
+~~~~
 Saar Yahalom
 Microsoft
 Shenkar 13, Hertzeliya
 Israel
 saary .at. microsoft.com
-```
-
-```
+~~~~
+~~~~
 Stephen Sugden
 Bet Smart Media
 19 Bastion Square, Victoria
 British Columbia, Canada
 stephen@betsmartmedia.com
-```
-
+~~~~
 ~~~~
 please fill in other authors
 ~~~~
