@@ -2,7 +2,7 @@
 % Thorsten Hoeger - Taimos GmbH
  Saar Yahalom - Microsoft
  Stephen Sugden - Bet Smart Media
- name - company - mail
+ name - company
 % October 2012
 
 ## Abstract
@@ -327,7 +327,7 @@ Extensions to RestDoc are given a unique name beginning with _RestDoc-_. The exa
 
 ## 7. Copyright
 
-This specification is copyrighted by the authors named in section 7.1. Is is free to use for any purposes commercial or non-commercial.
+This specification is copyrighted by the authors named in section 7.1. It is free to use for any purposes commercial or non-commercial.
 
 ### 7.1 Authors
 
