@@ -48,9 +48,9 @@ In the running example there are 2 resources with the paths "/{locale}/{messageI
 
 ### 2.2 Parameter
 
-A _parameter_ definition is used to define variable expansion for URI templates used in resources paths. A parameter SHOULD contain a _description_ describing the given parameter. A parameter MAY define _validations_ for the content. Each parameter name within one resource MUST be unique.
+A _parameter_ definition is used to define variable expansion for URI templates used in resources paths. A parameter definition SHOULD contain a _description_ describing the given parameter. A parameter MAY define _validations_ for the content.
 
-In the running example there are 2 parameters defined: locale and messageId.
+In the running example there are 2 parameters defined: `locale` and `messageId`.
 
 ### 2.3 Validation
 
