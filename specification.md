@@ -26,12 +26,12 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 For this specification a simple API for setting and retrieving localized messages is used.
 
 ~~~~~
----------------------- --------- ------------------------ --------------
-Resource               Methods   Representation           Status Codes
----------------------- --------- ------------------------ --------------
-/{locale}/{messageId}  GET, PUT  message format (string)  200, 201, 404
-/fallback/{locale}     GET, PUT  language format (string) 200, 201
----------------------- --------- ------------------------ --------------
+---------------------- ----------------- --------- ------------------------ --------------
+Resource               Id                Methods   Representation           Status Codes
+---------------------- ----------------- --------- ------------------------ --------------
+/{locale}/{messageId}  LocalizedMessage  GET, PUT  message format (string)  200, 201, 404
+/fallback/{locale}     FallbackLocale    GET, PUT  language format (string) 200, 201
+---------------------- ----------------- --------- ------------------------ --------------
 ~~~~~
 
 To update or create a new localized message you PUT a string value to it's /{locale}/{messageId} URI. To assign a fallback locale for missing messages, you PUT a locale name to /fallback/{locale}.
@@ -48,9 +48,9 @@ In the running example there are 2 resources with the paths "/{locale}/{messageI
 
 ### 2.2 Parameter
 
-A _parameter_ definition is used to define variable expansion for URI templates used in resources paths. A parameter SHOULD contain a _description_ describing the given parameter. A parameter MAY define _validations_ for the content. Each parameter name within one resource MUST be unique.
+A _parameter_ definition is used to define variable expansion for URI templates used in resources paths. A parameter definition SHOULD contain a _description_ describing the given parameter. A parameter MAY define _validations_ for the content.
 
-In the running example there are 2 parameters defined: locale and messageId.
+In the running example there are 2 parameters defined: `locale` and `messageId`.
 
 ### 2.3 Validation
 
@@ -61,7 +61,7 @@ Currently the only supported type is _match_. Multiple entries within one valida
 
 A _method_ entry represents the pair of _HTTP Verb_ and _resource_. It SHOULD contain a _description_ that describes the effect of calling this method. It also SHOULD contain a set of _status code_ definitions. A Status Code is represented by an integer with the HTTP Status Code and a textual definition what this return code means. The method SHOULD contain a set of accepted MediaTypes and SHOULD contain a set of request _headers_. Further the method SHOULD contain a _response_ definition. In addition a method MAY provide a set of _examples_, each consisting of an expanded path (no templates), a body and optional headers.
 
-In the running each resource has the two methods GET and PUT. The resource "/{locale}/{messageId}" has status codes of 200(OK), 201(Created) and 404(Not Found).
+In the running example each resource has the two methods GET and PUT. The resource "/{locale}/{messageId}" can return a different set of status codes depending on which method is requested: GET can return 200(OK), or 404(Not Found), while PUT should only ever return 201(Created).
 
 ### 2.5 Header
 
@@ -88,13 +88,14 @@ The overall structure of a RestDoc documentation consists of an optional schema 
 ### 3.2 Retrieval
 
 The retrieval of the RestDoc documentation is done via the HTTP OPTIONS verb. Querying the server with an asterisk as path (``OPTIONS * HTTP/1.1``) MUST return a RestDoc documentation with all resources available.
-Querying with a URI fragment (``OPTIONS /my/query/path HTTP/1.1``) MUST return a RestDoc documentation with all resources with paths starting with the given URI fragment.
+
+Performing an OPTIONS request with an unexpanded URI path MUST return a RestDoc resource description. Given our example application the request ``OPTIONS /%7Blocale%7D/%7BmessageId%7D HTTP/1.1`` MUST return the RestDoc resource description for the "LocalizedMessage" resource.
 
 ## 4. Representations
 
 ### 4.1 JSON
 
-The default representation of RestDoc is JSON with the custom MediaType ``application/x-restdoc+json``. Because of the usage of custom names and values as field names it is not possible to define RestDoc with JSON Schema. In the following you find a textual definition of the RestDoc JSON representation.
+The default representation of RestDoc is JSON with the custom MediaType ``application/x-restdoc+json``. In the following you find a textual definition of the RestDoc JSON representation.
 
 The root object contains of two object with the names "schema" and "headers" and an array "resources". 
 
@@ -344,6 +345,15 @@ Shenkar 13, Hertzeliya
 Israel
 saary .at. microsoft.com
 ```
+
+```
+Stephen Sugden
+Bet Smart Media
+19 Bastion Square, Victoria
+British Columbia, Canada
+stephen@betsmartmedia.com
+```
+
 ~~~~
 please fill in other authors
 ~~~~
