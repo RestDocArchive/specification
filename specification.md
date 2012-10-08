@@ -61,7 +61,7 @@ Currently the only supported type is _match_. Multiple entries within one valida
 
 A _method_ entry represents the pair of _HTTP Verb_ and _resource_. It SHOULD contain a _description_ that describes the effect of calling this method. It also SHOULD contain a set of _status code_ definitions. A Status Code is represented by an integer with the HTTP Status Code and a textual definition what this return code means. The method SHOULD contain a set of accepted MediaTypes and SHOULD contain a set of request _headers_. Further the method SHOULD contain a _response_ definition. In addition a method MAY provide a set of _examples_, each consisting of an expanded path (no templates), a body and optional headers.
 
-In the running each resource has the two methods GET and PUT. The resource "/{locale}/{messageId}" has status codes of 200(OK), 201(Created) and 404(Not Found).
+In the running example each resource has the two methods GET and PUT. The resource "/{locale}/{messageId}" can return a different set of status codes depending on which method is requested: GET can return 200(OK), or 404(Not Found), while PUT should only ever return 201(Created).
 
 ### 2.5 Header
 
