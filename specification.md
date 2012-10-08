@@ -26,12 +26,12 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 For this specification a simple API for setting and retrieving localized messages is used.
 
 ~~~~~
----------------------- --------- ------------------------ --------------
-Resource               Methods   Representation           Status Codes
----------------------- --------- ------------------------ --------------
-/{locale}/{messageId}  GET, PUT  message format (string)  200, 201, 404
-/fallback/{locale}     GET, PUT  language format (string) 200, 201
----------------------- --------- ------------------------ --------------
+---------------------- ----------------- --------- ------------------------ --------------
+Resource               Id                Methods   Representation           Status Codes
+---------------------- ----------------- --------- ------------------------ --------------
+/{locale}/{messageId}  LocalizedMessage  GET, PUT  message format (string)  200, 201, 404
+/fallback/{locale}     FallbackLocale    GET, PUT  language format (string) 200, 201
+---------------------- ----------------- --------- ------------------------ --------------
 ~~~~~
 
 To update or create a new localized message you PUT a string value to it's /{locale}/{messageId} URI. To assign a fallback locale for missing messages, you PUT a locale name to /fallback/{locale}.
