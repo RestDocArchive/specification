@@ -79,7 +79,7 @@ The response definition consists of a set of MediaTypes for return values and a 
 
 ### 2.8 Schema
 
-A schema is identified by its URI. There are two types of schema definitions. If the MediaType is JSON the schema can be defined inline otherwise the schema definition points to the URL containing the schema document.
+A schema is identified by its URI. There are two types of schema definitions. If the MediaType is JSON the schema can be defined inline. The second option is to point to the URL containing the schema document.
 
 ## 3. RestDoc
 
@@ -99,7 +99,7 @@ Performing an OPTIONS request with an unexpanded URI path MUST return a RestDoc 
 
 The default representation of RestDoc is JSON with the custom MediaType ``application/x-restdoc+json``. In the following you find a textual definition of the RestDoc JSON representation.
 
-The root object contains of two object with the names "schema" and "headers" and an array "resources". 
+The root object consist of two object with the names "schema" and "headers" and an array "resources". 
 
 The "schema" object contains objects with the schema URI as name and the schema definition as content. The content contains a field type with value "inline" or "url". Inline schemas provide a schema object with inline JSON-Schema and URL schemas provide a field url with the URL of the schema document.
 
@@ -144,7 +144,7 @@ The "headers" object contains a "request" and a "response" object. The contents 
   },
 ~~~~~
 
-The resources array contains of objects with the following fields:
+The resources array consist of objects with the following fields:
 
 - id: the id of the resource
 - description: the resource description
@@ -152,7 +152,7 @@ The resources array contains of objects with the following fields:
 - params: the parameter object
 - methods: the method object
 
-The _params_ object has the parameter names as field names and an object as content.
+The _params_ object has the parameter names as field names and an object as content:
 
 - description: the parameter description
 - validations: array of parameter validations
@@ -171,7 +171,7 @@ The _params_ object has the parameter names as field names and an object as cont
   },
 ~~~~~
 
-The _methods_ object has HTTP verbs as field names and an object as content.
+The _methods_ object has HTTP verbs as field names and an object as content:
 
 - description: the method description
 - statusCodes: the status code object
@@ -290,8 +290,7 @@ Accept: application/json;
           "statusCodes": { 
              "200": "Message retrieved successfully", 
              "404": "Message not found"
-          },
-          "accepts": [] // Explicitly indicate that this method takes no request body. 
+          }
         }
       }
     },
