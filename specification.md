@@ -354,6 +354,13 @@ British Columbia, Canada
 stephen@betsmartmedia.com
 ~~~~
 ~~~~
+Zac Stewart
+Big Nerd Ranch
+112 Krog St SESuite 6
+Atlanta, GA 30312
+zgstewart@gmail.com
+~~~~
+~~~~
 please fill in other authors
 ~~~~
 
