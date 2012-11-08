@@ -2,7 +2,7 @@
 % Thorsten Hoeger - Taimos GmbH
  Saar Yahalom - Microsoft
  Stephen Sugden - Bet Smart Media
- name - company
+ Zac Stewart - Big Nerd Ranch
 % October 2012
 
 ## Abstract
@@ -359,9 +359,6 @@ Big Nerd Ranch
 112 Krog St SESuite 6
 Atlanta, GA 30312
 zgstewart@gmail.com
-~~~~
-~~~~
-please fill in other authors
 ~~~~
 
 ### 7.2 Contact
