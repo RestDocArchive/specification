@@ -1,9 +1,4 @@
-% RestDoc - Documenting REST APIs
-% Thorsten Hoeger - Taimos GmbH
- Saar Yahalom - Microsoft
- Stephen Sugden - Bet Smart Media
- Zac Stewart - Big Nerd Ranch
-% October 2012
+# RestDoc - Documenting REST APIs
 
 # DRAFT
 
