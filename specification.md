@@ -39,7 +39,7 @@ The RestDoc model consist of different components, which are described in the fo
 
 ### 2.1 Resource
 
-A _resource_ MUST have a unique _id_ that names the resource and SHOULD have a _description_ containing further information about the intented use of the given resource. The _path_ MUST be part of the resource definition and MUST be unique. The path is a URI \[[RFC2396]\] or URI template \[[RFC6570]\]. If the path contains variables the resource MUST contain a set of _parameter_ definitions. The resource MUST contain one definition for each available HTTP _method_.
+A _resource_ MUST have a unique _id_ that names the resource and SHOULD have a _description_ containing further information about the intended use of the given resource. The _path_ MUST be part of the resource definition and MUST be unique. The path is a URI \[[RFC2396]\] or URI template \[[RFC6570]\]. If the path contains variables the resource MUST contain a set of _parameter_ definitions. The resource MUST contain one definition for each available HTTP _method_.
 
 In the running example there are 2 resources with the paths "/{locale}/{messageId}" and "/fallback/{locale}".
 
@@ -52,7 +52,7 @@ In the running example there are 2 parameters defined: `locale` and `messageId`.
 ### 2.3 Validation
 
 _Validations_ define means to check the content of parameters. Validations are a set of type/pattern pairs with _type_ defining the validation type and _pattern_ containing the regular expression to apply.
-Currently the only supported type is _match_. Multiple entries within one validation set are disjunctive, so the entries are ORed.
+Currently the only supported type is _match_. Multiple entries within one validation set are disjunctive, so the entries are OR'ed.
 
 ### 2.4 Method
 
@@ -265,7 +265,9 @@ Accept: application/json;
               { "type": "application/json", "schema": "http://some.json/msg" },
             ],
             "headers": {
-              "X-What-Response-Header-Would-Only-Show-Up-For-One-Resource?": {}
+              "Location": {
+			    "description": "The URL of the created message"
+			  }
             }
           },
           "examples": [
