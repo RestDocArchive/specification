@@ -361,6 +361,7 @@ zgstewart@gmail.com
 ### 7.2 Contact
 
 This specification and any related work is located at <http://www.restdoc.org> and <https://github.com/RestDoc>. 
+Discussion and help can be found on the RestDoc Google group located at <https://groups.google.com/d/forum/restdoc>
 
 ## A. References
 
