@@ -188,7 +188,7 @@ see _Section 5.1_ for a full example of a JSON representation of RestDoc
 
 ~~~~~ {.javascript}
 OPTIONS / HTTP/1.1
-Accept: application/json;
+Accept: application/x-restdoc+json;
 
 {
   "schemas" : {
@@ -262,7 +262,7 @@ Accept: application/json;
           "response": { // Response representations this resource/method provides
             "types": [
               { "type": "text/plain" },
-              { "type": "application/json", "schema": "http://some.json/msg" },
+              { "type": "application/json", "schema": "http://some.json/msg" }
             ],
             "headers": {
               "Location": {
