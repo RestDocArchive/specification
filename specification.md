@@ -1,6 +1,6 @@
 # RestDoc - Documenting REST APIs
 
-# DRAFT
+# Version 1 (2012-12-02)
 
 ## 1. Introduction
 
@@ -35,7 +35,7 @@ To update or create a new localized message you PUT a string value to it's /{loc
 
 ## 2. Components
 
-The RestDoc model consist of different components, which are described in the following sections. Each component is part of the root model or is part of another component. The overall structure of RestDoc in defined in chapter [3.1](#structure)
+The RestDoc model consist of different components, which are described in the following sections. Each component is part of the root model or is part of another component. The overall structure of RestDoc in defined in chapter _3.1_
 
 ### 2.1 Resource
 
@@ -84,7 +84,7 @@ The overall structure of a RestDoc documentation consists of an optional schema 
 
 ### 3.2 Retrieval
 
-The retrieval of the RestDoc documentation is done via the HTTP OPTIONS verb. Querying the server with a path (``OPTIONS /xyz HTTP/1.1``) MUST return a RestDoc documentation with all resources available beginning with /xyz.
+The retrieval of the RestDoc documentation is done via the HTTP OPTIONS verb. Querying the server with a path (``OPTIONS /xyz HTTP/1.1``) MUST return a RestDoc documentation with all resources available with paths beginning with /xyz.
 
 Performing an OPTIONS request with an unexpanded URI path MUST return a RestDoc resource description. Given our example application the request ``OPTIONS /%7Blocale%7D/%7BmessageId%7D HTTP/1.1`` MUST return the RestDoc resource description for the "LocalizedMessage" resource.
 
@@ -94,9 +94,9 @@ Performing an OPTIONS request with an unexpanded URI path MUST return a RestDoc 
 
 The default representation of RestDoc is JSON with the custom MediaType ``application/x-restdoc+json``. In the following you find a textual definition of the RestDoc JSON representation.
 
-The root object consist of two object with the names "schema" and "headers" and an array "resources". 
+The root object consist of two object with the names _schema_ and _headers_ and an array _resources_. 
 
-The "schema" object contains objects with the schema URI as name and the schema definition as content. The content contains a field type with value "inline" or "url". Inline schemas provide a schema object with inline JSON-Schema and URL schemas provide a field url with the URL of the schema document.
+The _schema_ object contains objects with the schema URI as name and the schema definition as content. The content contains a field type with value _inline_ or _url_. Inline schemas provide a schema object with inline JSON-Schema and URL schemas provide a field url with the URL of the schema document.
 
 ~~~~~ {.javascript}
   "schemas" : {
@@ -114,14 +114,14 @@ The "schema" object contains objects with the schema URI as name and the schema 
         }
       }
     },
-	"http://some.xml/msg" : {
-	  "type" : "url",
-	  "url" : "http://some.xml/msg.xsd"
-	}
+    "http://some.xml/msg" : {
+      "type" : "url",
+        "url" : "http://some.xml/msg.xsd"
+    }
   },
 ~~~~~
 
-The "headers" object contains a "request" and a "response" object. The contents of these objects are itself objects with the header name as field name and the content as described in [Section 2.5](#header).
+The _headers_ object contains a _request_ and a _response_ object. The contents of these objects are itself objects with the header name as field name and the content as described in _Section 2.5_
 
 ~~~~~ {.javascript}
   "headers": {
@@ -159,8 +159,8 @@ The _params_ object has the parameter names as field names and an object as cont
     "locale": {
       "description": "A standard locale string, e.g. \"en_US.utf-8\"",
       "validations": [ { 
-	    "type": "match", 
-		"pattern": "[a-z]+(_[A-Z]+)?(\\\\.[a-z-]+)?" 
+        "type": "match", 
+        "pattern": "[a-z]+(_[A-Z]+)?(\\\\.[a-z-]+)?" 
       } ]
     }
   },
@@ -180,14 +180,14 @@ The _methods_ object has HTTP verbs as field names and an object as content:
 	- headers: request headers
 	- body: the example request body
 
-see [Section 5.1](#full-restdoc-example) for a full example of a JSON representation of RestDoc
+see _Section 5.1_ for a full example of a JSON representation of RestDoc
 
 ## 5. Examples
 
 ### 5.1 Full RestDoc example
 
 ~~~~~ {.javascript}
-OPTIONS * HTTP/1.1
+OPTIONS / HTTP/1.1
 Accept: application/json;
 
 {
@@ -266,8 +266,8 @@ Accept: application/json;
             ],
             "headers": {
               "Location": {
-			    "description": "The URL of the created message"
-			  }
+                "description": "The URL of the created message"
+              }
             }
           },
           "examples": [
@@ -294,7 +294,7 @@ Accept: application/json;
     {
       // This resource has no human-readable documentation, but still provides some info on how to use it.
       "id": "FallbackLocale",
-	  "path": "/fallback/{locale}",
+      "path": "/fallback/{locale}",
       "params": {
         "locale": { 
           "validations": [ { "type": "match", "pattern": "[a-z]+(_[A-Z]+)?(\\\\.[a-z-]+)?" } ]
@@ -315,7 +315,7 @@ Accept: application/json;
 
 RestDoc is designed to be extensible. Therefore any additional fields not named in this specification MUST be ignored by implementations that do not understand them. But implementations MUST NOT rely on any additional fields to be RestDoc compliant. Extensions MUST NOT change the meaning of fields defined in this specification.
 
-An extension may for example defined other validation types than "match" but must not change the behavior of the type "match".
+An extension may for example defined other validation types than _match_ but must not change the behavior of the type _match_.
 
 ### 6.2 Naming conventions
 
