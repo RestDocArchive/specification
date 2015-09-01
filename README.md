@@ -1,3 +1,7 @@
+# This project is discontinued. Have a look at Swagger instead
+
+---
+
 # RestDoc Specification
 
 Welcome to the RestDoc project! This project created a language-agnostic 

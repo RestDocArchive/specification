@@ -1,3 +1,7 @@
+# This project is discontinued. Have a look at Swagger instead
+
+---
+
 # RestDoc - Documenting REST APIs
 
 # Version 1 (2012-12-02)
